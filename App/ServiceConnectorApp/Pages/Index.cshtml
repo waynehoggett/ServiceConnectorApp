@@ -1,0 +1,52 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Test SQL Connection Query Page";
+}
+
+
+<h1 class="display-4">Test SQL Connection</h1>
+<form method="post">
+    <div class="form-group">
+        <label for="query" class="form-label">Enter SQL Query:</label>
+        <textarea id="query" name="query" rows="4" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
+
+@if (Model.Results != null)
+{
+    <h3>Query Results:</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @foreach (var column in Model.Results.Columns)
+                {
+                    <th>@column</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Results.Rows)
+            {
+                <tr>
+                    @foreach (var item in row.ItemArray)
+                    {
+                        <td>@item</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
